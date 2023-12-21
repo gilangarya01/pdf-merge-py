@@ -1,46 +1,50 @@
-import PySimpleGUI as sg
-import PyPDF2
+import customtkinter
+import utils
 
-file_types = [("PDF (*.pdf)", "*.pdf")]
-merger = PyPDF2.PdfMerger()
+customtkinter.deactivate_automatic_dpi_awareness()
 
-def main():
-    layout = [
-        [
-            sg.Text("PDF 1"),
-            sg.Input(key="-FILE1-", do_not_clear=False),
-            sg.FileBrowse(file_types=file_types),
-        ],
-        [
-            sg.Text("PDF 2"),
-            sg.Input(key="-FILE2-", do_not_clear=False),
-            sg.FileBrowse(file_types=file_types),
-        ],
-        [
-            sg.Text("Nama Output"),
-            sg.Input(key="-OUTPUT-", do_not_clear=False),
-        ],
-        [
-            sg.Button("Merge"),
-        ]
-    ]
+app = customtkinter.CTk()
+app.geometry("600x400")
+app.title("PDF Merge")
 
-    window = sg.Window("Merge PDF", layout)
+title = customtkinter.CTkLabel(
+    app,
+    text="PDF Merge",
+    fg_color="transparent",
+    font=customtkinter.CTkFont(size=20, weight="bold"),
+)
+title.grid(row=0, column=0, columnspan=2, pady=20, sticky="new")
 
-    while True:
-        event, values = window.read()
-        if event == "Exit" or event == sg.WIN_CLOSED:
-            break
-        if event == "Merge":
-            files = [values["-FILE1-"], values["-FILE2-"]]
+frame_file = customtkinter.CTkFrame(master=app, width=200, height=40)
+frame_file.grid(row=1, column=0, rowspan=2, padx=20, sticky="new")
 
-            for file in files:
-                merger.append(file)
-            
-            new_file = f"output/{values['-OUTPUT-']}.pdf"
-            merger.write(new_file)
+frame_file.grid_columnconfigure(0, weight=1)
 
-    window.close()
+frame_btn = customtkinter.CTkFrame(master=app)
+frame_btn.grid(row=1, column=1, padx=20, sticky="new")
 
-if __name__ == "__main__":
-    main()
+
+def browser_file():
+    utils.open_file(frame_file)
+
+
+browser_btn = customtkinter.CTkButton(
+    frame_btn,
+    text="Browser File",
+    command=browser_file,
+)
+browser_btn.pack(pady=10)
+
+merge_btn = customtkinter.CTkButton(
+    frame_btn,
+    text="Merge",
+    fg_color="#ff6600",
+    hover_color="#963c00",
+    command=utils.open_location_output,
+)
+merge_btn.pack(pady=10)
+
+app.grid_columnconfigure(0, weight=6)
+app.grid_columnconfigure(1, weight=1)
+
+app.mainloop()

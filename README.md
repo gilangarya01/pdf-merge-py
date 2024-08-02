@@ -8,7 +8,16 @@ Proyek ini adalah aplikasi sederhana yang memanfaatkan dua library Python, yaitu
 
 ##### Cara Menggunakan Aplikasi:
 
-- Jalan aplikasi dengan menjalankan perintah `python app.py` di terminal anda
+- Buat dan aktifkan lingkungan virtual `venv` :
+  ```bash
+  python -m venv venv
+  source venv/bin/activate  # Untuk Windows gunakan: venv\Scripts\activate
+  ```
+- Instal dependensi dari `requirements.txt` :
+  ```bash
+  pip install -r requirements.txt
+  ```
+- Jalankan program `python app.py` dan tekan tombol "Cari Folder" dan pilih folder yang ingin diatur
 - Pilih file PDF yang ingin Anda gabungkan dengan menekan tombol "Browser File" untuk setiap file.
 - Klik tombol "Merge" untuk memulai proses penggabungan.
 - File PDF hasil gabungan akan disimpan pada path yang sudah anda pilih dengan nama `output.pdf`
